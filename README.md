@@ -12,7 +12,7 @@ Enter the Multi Procfile buildpack, where every app gets a Procfile!
 2. Create a bunch of Heroku apps.
 3. For each app, set `PROCFILE=relative/path/to/Procfile/in/your/codebase`, and of course:
    `heroku buildpacks:add -a <app> https://github.com/heroku/heroku-buildpack-multi-procfile`
-4. For each app, `git push git@heroku.com:<app> master`
+4. For each app, `git push git@heroku.com:<app>.git master`
 
 # Authors
 
