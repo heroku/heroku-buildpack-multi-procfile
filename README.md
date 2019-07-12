@@ -15,6 +15,12 @@ $ git push https://git.heroku.com/example-2.git HEAD:master
 
 When example-1 builds, it'll copy Procfile into /app/Procfile, and when example-2 builds, it'll copy backend/Procfile to /app/Procfile. For example-2, the process types available for you to scale up will be the ones referenced (originally) in backend/Procfile.
 
+# Heroku Pipelines
+
+**This buildpack will not work** for using a different Procfile in staging and production. You must use the same Procfile in these two environments because the slug will be compiled when your app is deployed to staging. When the compiled slug is promoted to production, the production environment will be ignored because the app won't be compiled again to copy over a different Procfile.
+
+This buildpack does work well for review apps though because they are compiled each time you deploy a new review app.
+
 # Authors
 
 Andrew Gwozdziewycz <apg@heroku.com> and Cyril David <cyx@heroku.com>
