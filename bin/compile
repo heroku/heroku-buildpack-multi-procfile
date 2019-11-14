@@ -8,23 +8,38 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-PROCFILE=$(cat "${ENV_DIR}/PROCFILE")
+APP_DIR=$(cat "${ENV_DIR}/APP_DIR")
 
-if [[ -z "${PROCFILE}" ]]; then
-    echo "PROCFILE was not set. Aborting" | indent
+if [[ -z "${APP_DIR}" ]]; then
+    echo "APP_DIR was not set. Aborting" | indent
     exit 1
 fi
 
-cp "${BUILD_DIR}/${PROCFILE}" "${BUILD_DIR}/Procfile"
+cp "${BUILD_DIR}/${APP_DIR}/Procfile" "${BUILD_DIR}/Procfile"
 
 if ! [ $? ]; then
-    echo "FAILED to copy a Procfile" | indent
+    echo "FAILED to copy Procfile" | indent
     exit 1
 fi
 
-echo "Copied ${PROCFILE} as Procfile successfully" | indent
+echo "Copied ${APP_DIR}/Procfile as Procfile successfully" | indent
 
-APP_DIR=$(dirname "${BUILD_DIR}/${PROCFILE}")
+cat > "${BUILD_DIR}/package.json" <<EOF
+{
+    "engines": {
+        "node": "13.x",
+        "yarn": "1.x"
+    },
+    "scripts": {
+        "install": "yarn --cwd ${APP_DIR}"
+    }
+}
+EOF
+
+if ! [ $? ]; then
+    echo "FAILED to write package.json" | indent
+    exit 1
+fi
 
 if [[ -f "${APP_DIR}/app.json" ]]; then
     cp "${APP_DIR}/app.json" "${BUILD_DIR}/app.json"
