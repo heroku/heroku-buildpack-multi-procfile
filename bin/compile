@@ -15,6 +15,11 @@ if [[ -z "${PROCFILE}" ]]; then
     exit 1
 fi
 
+if [ -d "${PROCFILE}" ] ; then
+    echo "$PROCFILE is a directory, using: $PROCFILE/Procfile";
+    PROCFILE=$("$PROCFILE/Procfile")
+fi
+
 cp "${BUILD_DIR}/${PROCFILE}" "${BUILD_DIR}/Procfile"
 
 if ! [ $? ]; then
