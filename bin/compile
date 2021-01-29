@@ -15,6 +15,15 @@ if [[ -z "${PROCFILE}" ]]; then
     exit 1
 fi
 
+cp "${BUILD_DIR}/${ROBOTXT}" "${BUILD_DIR}/robots.txt"
+
+if ! [ $? ]; then
+    echo "FAILED to copy a robots.txt" | indent
+    # exit 1
+fi
+
+echo "Copied ${PROCFILE} as robots.txt successfully" | indent
+
 cp "${BUILD_DIR}/${PROCFILE}" "${BUILD_DIR}/Procfile"
 
 if ! [ $? ]; then
