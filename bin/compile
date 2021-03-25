@@ -27,7 +27,7 @@ echo "Copied ${APP_DIR}/Procfile as Procfile successfully" | indent
 cat > "${BUILD_DIR}/package.json" <<EOF
 {
     "engines": {
-        "node": "13.x",
+        "node": "14.x",
         "yarn": "1.x"
     },
     "scripts": {
