@@ -5,8 +5,8 @@ _tl;dr_ -- The idea here is that you have a single git repository, but multiple 
 ```
 $ heroku create -a example-1
 $ heroku create -a example-2
-$ heroku buildpacks:add -a example-1 heroku-community/multi-procfile
-$ heroku buildpacks:add -a example-2 heroku-community/multi-procfile
+$ heroku buildpacks:add -a example-1 https://github.com/myAgro/heroku-buildpack-multi-procfile
+$ heroku buildpacks:add -a example-2 https://github.com/myAgro/heroku-buildpack-multi-procfile
 $ heroku config:set -a example-1 PROCFILE=Procfile
 $ heroku config:set -a example-2 PROCFILE=backend/Procfile
 $ git push https://git.heroku.com/example-1.git HEAD:master
@@ -22,3 +22,7 @@ Only **builds** will set the proper Procfile. If you use [Heroku Pipelines](http
 ## Authors
 
 Andrew Gwozdziewycz <apg@heroku.com> and Cyril David <cyx@heroku.com>
+
+## myAgro Fork
+
+Added support to have independent requirements.txt and runtime.txt files within each web service within a monorepo to support python deploys

@@ -26,7 +26,12 @@ echo "Copied ${PROCFILE} as Procfile successfully" | indent
 
 APP_DIR=$(dirname "${BUILD_DIR}/${PROCFILE}")
 
-if [[ -f "${APP_DIR}/app.json" ]]; then
-    cp "${APP_DIR}/app.json" "${BUILD_DIR}/app.json"
-    echo "Copied ${APP_DIR}/app.json as app.json successfully" | indent
+if [[ -f "${APP_DIR}/requirements.txt" ]]; then
+    cp "${APP_DIR}/requirements.txt" "${BUILD_DIR}/requirements.txt"
+    echo "Copied ${APP_DIR}/requirements.txt as requirements.txt successfully" | indent
+fi
+
+if [[ -f "${APP_DIR}/runtime.txt" ]]; then
+    cp "${APP_DIR}/runtime.txt" "${BUILD_DIR}/runtime.txt"
+    echo "Copied ${APP_DIR}/runtime.txt as runtime.txt successfully" | indent
 fi
