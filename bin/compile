@@ -15,12 +15,10 @@ if [[ -z "${PROCFILE}" ]]; then
     exit 1
 fi
 
-PROCFILE_BUILDED="${BUILD_DIR}/${PROCFILE}"
-cp "${PROCFILE_BUILDED}" "${BUILD_DIR}/Procfile"
+cp "${BUILD_DIR}/${PROCFILE}" "${BUILD_DIR}/Procfile"
 
 if [ $? -ne 0 ]; then
     echo "FAILED to copy a Procfile" | indent
-    echo "The file ${PROCFILE_BUILDED} doesn't not exists" | indent
     exit 1
 fi
 
