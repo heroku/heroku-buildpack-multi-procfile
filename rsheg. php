@@ -1,0 +1,1169 @@
+   <?php
+
+//من تنشر اذكر المصدر @vvvvpv//
+
+$API = '7157887824:AAE-xQD0X4tUlTJIik28lFddmPzbN4strAs.';
+
+define('API_KEY',$API);
+
+function bot($method,$datas=[]){
+
+    $url = "https://api.telegram.org/bot".API_KEY."/".$method;
+
+$ch = curl_init();
+
+curl_setopt($ch,CURLOPT_URL,$url);
+
+curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+
+curl_setopt($ch,CURLOPT_POSTFIELDS,$datas);
+
+$res = curl_exec($ch);
+
+if(curl_error($ch)){
+
+var_dump(curl_error($ch));
+
+}else{
+
+return json_decode($res);
+
+}}
+
+$update = json_decode(file_get_contents('php://input'));
+
+$message = $update->message;
+
+$from_id = $message->from->id;
+
+$chat_id = $message->chat->id;
+
+$text = $message->text;
+
+$name = $message->from->first_name;
+
+    $chat_id2 = $update->callback_query->message->chat->id;
+
+$message_id2 = $update->callback_query->message->message_id;
+
+$data = $update->callback_query->data;
+
+$id = $message->from->id;
+
+$text = $message->text;
+
+$chat_id = $message->chat->id;
+
+$user = $message->from->username;
+
+$name = $message->from->first_name;
+
+$sajad = file_get_contents("rembo.txt");
+
+$ch = file_get_contents("ch.txt");
+
+$tn = file_get_contents("tnb.txt");
+
+$ban = file_get_contents("ban.txt");
+
+$exb = explode("\n",$ban);
+
+$rembo = "ايدي"; #ايديك#
+
+$m = explode("\n",file_get_contents("member.txt"));
+
+$m1 = count($m)-1;
+
+if($message and !in_array($id, $m)){
+
+file_put_contents("member.txt", $id."\n",FILE_APPEND);
+
+ }
+
+$j = file_get_contents("https://api.telegram.org/bot".API_KEY."/getChatMember?chat_id=$ch&user_id=".$id);
+
+if($message && (strpos($j,'"status":"left"') or strpos($j,'"Bad Request: USER_ID_INVALID"') or strpos($j,'"status":"kicked"'))!== false){
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"عذرا عزيزي اشترك بقناة البوت اولا❎
+
+$ch
+
+ثم ارسل /start",
+
+]);return false;}
+
+
+
+if($text =="/start"and $tn =="on"and $id !=$rembo){
+
+bot('sendmessage',[
+
+'chat_id'=>$rembo,
+
+'text'=>
+
+"
+
+دخل شخص للبوت🆕
+
+👨‍💼¦ اسمه » ️ [$name](tg://user?id=$id)
+
+🔱¦ معرفه »  ️[@$user](tg://user?id=$id)
+
+💳¦ ايديه » ️ [$id](tg://user?id=$id)
+
+",
+
+'parse_mode'=>"MarkDown",
+
+]);
+
+}
+
+if($text =='/ivar' and $id ==$rembo){
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"اهلا بڪ عزيزي اليڪ اوامرڪ⚡📮",
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>".•المشترڪين",'callback_data'=>"m1"]],
+
+[['text'=>"•اذاعهہ‏‏ رسـآله📮",'callback_data'=>"send"],['text'=>"•توجہيه رسالهہ‏‏‏‏🔄",'callback_data'=>"forward"]],
+
+[['text'=>"•وضع اشتراك اجباري💢",'callback_data'=>"ach"],['text'=>"•حذف اشتراك اجباري🔱",'callback_data'=>"dch"]],
+
+[['text'=>"•تفعيل التنبيه✔️",'callback_data'=>"ons"],['text'=>"•تعطيل التنبيه❎",'callback_data'=>"ofs"]],
+
+[['text'=>"فتح البوت✅",'callback_data'=>"obot"],['text'=>"ايقاف البوت❌",'callback_data'=>"ofbot"]],
+
+[['text'=>"حظر عضو✅",'callback_data'=>"ban"],['text'=>"الغاء حظر عضو❌",'callback_data'=>"unban"]],
+
+]
+
+])
+
+]);
+
+}
+
+
+
+if($data =='back'){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2,
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"اهلا بڪ عزيزي اليڪ اوامرڪ⚡📮",
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>".•المشترڪين ",'callback_data'=>"m1"]],
+
+[['text'=>"•اذاعهہ‏‏ رسـآله📮",'callback_data'=>"send"],['text'=>"•توجہيه رسالهہ‏‏‏‏🔄",'callback_data'=>"forward"]],
+
+[['text'=>"•وضع اشتراك اجباري💢",'callback_data'=>"ach"],['text'=>"•حذف اشتراك اجباري🔱",'callback_data'=>"dch"]],
+
+[['text'=>"•تفعيل التنبيه✔️",'callback_data'=>"ons"],['text'=>"•تعطيل التنبيه❎",'callback_data'=>"ofs"]],
+
+[['text'=>"فتح البوت✅",'callback_data'=>"obot"],['text'=>"ايقاف البوت❌",'callback_data'=>"ofbot"]],
+
+[['text'=>"حظر عضو✅",'callback_data'=>"ban"],['text'=>"الغاء حظر عضو❌",'callback_data'=>"unban"]],
+
+]
+
+])
+
+]);
+
+unlink("rembo.txt");
+
+}
+
+if($data =="ban"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"حسنا عزيزي ارسل ايدي العضو لاحظره🤩", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"الغاء الامر❎",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("rembo.txt","ban");
+
+}
+
+
+
+if($text and $sajad =="ban" and $id ==$rembo){
+
+file_put_contents("ban.txt",$text."\n",FILE_APPEND);
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"تم حظر العضور بنجاح✅",
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"العودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+bot('SendMessage',[
+
+'chat_id'=>$text,
+
+'text'=>"تم حظرك من قبل المطور لايمكنك استخدام البوت😒",
+
+]);
+
+}
+
+
+
+if($data =="unban"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"حسنا عزيزي ارسل ايدي العضو لالغاء حظره🔱", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"الغاء الامر❎",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("rembo.txt","unban");
+
+}
+
+if($text and $sajad =="unban" and $id ==$rembo){
+
+$bn = str_replace($text,'',$ban);
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"تم الغاء حظر العضور بنجاح✅",
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"العودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("ban.txt",$bn);
+
+unlink("rembo.txt");
+
+bot('SendMessage',[
+
+'chat_id'=>$text,
+
+'text'=>"تم الغاء حظرك من البوت🤩",
+
+]);
+
+}
+
+if($data =="ofbot"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"تم اغلاق البوت✅", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"عودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("bot.txt","off");
+
+}
+
+$obot = file_get_contents("bot.txt");
+
+if($data =="obot"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"تم فتح البوت بنجاح✅",
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"عودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+unlink("bot.txt");
+
+}
+
+if($data =="send"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"حسنا عزيزي ارسل رسالتك📮", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"الغاء الامر❎",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("rembo.txt","send");
+
+} 
+
+if($text and $sajad == "send" and $id == $rembo){
+
+bot("sendmessage",[
+
+"chat_id"=>$chat_id,
+
+"text"=>'-تم النشر بنجاح✔️',
+
+ 'reply_markup'=>json_encode([ 
+
+      'inline_keyboard'=>[
+
+[['text'=>'العوده🔙' ,'callback_data'=>"back"]],
+
+]])
+
+]);
+
+for($i=0;$i<count($m); $i++){
+
+bot('sendMessage', [
+
+'chat_id'=>$m[$i],
+
+'text'=>$text
+
+]);
+
+unlink("rembo.txt");
+
+}
+
+}
+
+if($data =="forward"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"حسنا عزيزي قم بتوجيه الرسالة✅", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"الغاء الامر❎",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("rembo.txt","forward");
+
+} 
+
+if($text and $sajad == "forward" and $id == $rembo){
+
+bot("sendmessage",[
+
+"chat_id"=>$chat_id,
+
+"text"=>'تم التوجيه بنجاح🔰',
+
+ 'reply_markup'=>json_encode([ 
+
+      'inline_keyboard'=>[
+
+[['text'=>'العوده🔙' ,'callback_data'=>"back"]],
+
+]])
+
+]);
+
+for($i=0;$i<count($m); $i++){
+
+bot('forwardMessage', [
+
+'chat_id'=>$m[$i],
+
+'from_chat_id'=>$id,
+
+'message_id'=>$message->message_id
+
+]);
+
+unlink("rembo.txt");
+
+}
+
+}
+
+if($data =="ach"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"حسنا عزيزي ارسل معرف قناتك 📮
+
+", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"الغاء الامر❎",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("rembo.txt","ch");
+
+} 
+
+if($text and $sajad =="ch" and $id ==$rembo ){
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id, 
+
+'text'=>"تم وضع اشتراك اجباري😁", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"العودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]); 
+
+file_put_contents("ch.txt","$text");
+
+unlink("rembo.txt");
+
+} 
+
+if($data == "m1"){ 
+
+    bot('answercallbackquery',[
+
+        'callback_query_id'=>$update->callback_query->id,
+
+        'text'=>"
+
+عدد المشترڪين هو » $m1 «
+
+        ",
+
+        'show_alert'=>true,
+
+]);
+
+}
+
+if($data =="dch"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"🔰تم حذف القناة بنجاح", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"العودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]); 
+
+unlink("ch.txt");
+
+} 
+
+if($data =="ons"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"
+
+تم تفعيل التنبيه بنجاح✅
+
+", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"العودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+file_put_contents("tnb.txt","on");
+
+} 
+
+
+
+if($data =="ofs"){
+
+bot('editmessagetext',[
+
+'chat_id'=>$chat_id2, 
+
+'message_id'=>$update->callback_query->message->message_id,
+
+'text'=>"
+
+تم تعطيل التنبيه بنجاح✅
+
+", 
+
+'reply_markup'=>json_encode([
+
+'inline_keyboard'=>[
+
+[['text'=>"العودة🔙",'callback_data'=>"back"]],
+
+]
+
+])
+
+]);
+
+unlink("tnb.txt");
+
+} 
+
+
+
+if($message and in_array($id, $exb)){
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"انت محظور من قبل المطور لايمكنك استخدام البوت📛",
+
+]);}
+
+
+
+if($message and $obot =="off" and $id !=$rembo){
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"❗️تم اطفا البوت... 
+
+هذا البوت الجدید-: @Mu07bot
+
+❗️The robot is switched off,...
+
+🌹 NeWBOT-: @mu07bot
+
+",
+
+]) ;}
+
+if($text == '/start'){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>'😍
+
+فی بوت رشق لایـlikeـک
+
+مافائده هذا البوت؟!
+
+عندک مسابقه ع اکثر تصویت(لایـlikeـک) وترید تفوز🥺؟
+
+عندک قنات مسوی بیها تصویت و محد یتفاعل و یصوت😞؟
+
+
+
+هذا البوت یرشقلک لایـlikeـک بل مجان تماما وراح یخلیک تفوز بمسابقتک وراح یصعد تفاعل قناتک کل هل شی بل مجان🥰
+
+≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
+
+Welcome to my friend In the east,😍
+
+
+
+ What is this bot?⁉️
+
+ You have a more voting contest (not like you) and you want to win?🥺
+
+ Do you have a voting channel that is voting and interacting and voting?😞
+
+ This bot will not disturb you. I love you so much, and you will win your competition.🥰
+
+
+
+Try his free is🙃
+
+
+
+🔩 Creator : @murtjaa_1
+
+
+
+∞∞∞∞∞∞∞∞∞∞∞', 
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+'keyboard'=>[ 
+
+[ 
+
+['text'=>"💟 رشق like"]
+
+], 
+
+[['text'=>"⚙️ معلومات حسابک"],['text'=>"📊 احصائیات البوت"]],
+
+[['text'=>"🛍 متجر"],['text'=>"👽رابط تجمیع نقاط💎"]],[['text'=>"⚠️مراسله الدعم"]],
+
+] 
+
+]) 
+
+]); 
+
+}
+
+if($text == "⚠️مراسله الدعم"){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>"- قم بمراسلة المطورين من هنا ♥️👇
+
+@Mu07bot
+
+#ملاحظة : هذا الزر متوقف بسبب رسائل اباحيه 🐸👉
+
+",
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+      'keyboard'=>[
+
+[['text'=>"←"]],
+
+]])
+
+]);
+
+}
+
+$bots = "Max_ivarbot";
+
+$id = $update->message->from->id;
+
+$user = $update->message->from->username;
+
+$bot = bot('getme',['g'=>'g'])->result->username;
+
+if ($text == "👽رابط تجمیع نقاط💎"  and !file_exists("$id.txt")) {
+
+  file_put_contents("$id.txt", "");
+
+  bot('sendMessage',[
+
+    'chat_id'=>$chat_id,
+
+    'text'=>"هل تريد زيادة لايكات مسابقتك بل مجان ⚠.
+
+ هل تريد الفوز بجميع المسابقات 😳?
+
+هل ترید تصعد like تفاعل قناتک؟!
+
+ كل ماعليك هوا جمع نقاط و رشق لايكات مسابقتك او منشوراتک بكل سهوله ومجانا 📌
+
+🤖: https://t.me/$bots?start=$id ✓
+
+",
+
+    ]);  
+
+}
+
+// امر لطلب رابط //
+
+if ($text == "👽رابط تجمیع نقاط💎"  and file_exists("$id.txt")) {
+
+  bot('sendMessage',[
+
+    'chat_id'=>$chat_id,
+
+    'text'=>"هل تريد زيادة لايكات مسابقتك بل مجان ⚠.
+
+ هل تريد الفوز بجميع المسابقات 😳?
+
+هل ترید تصعد like تفاعل قناتک؟!
+
+ كل ماعليك هوا جمع نقاط و رشق لايكات مسابقتك او منشوراتک بكل سهوله ومجانا 📌
+
+🤖: https://t.me/$bots?start=$id ✓
+
+",
+
+    ]);  
+
+}
+
+
+
+$start = explode(' ', $text);
+
+if (isset($start[0]) and isset($start[1]) and $start[0]=='/start' and !in_array($id, explode("\n", file_get_contents($$start[1].".txt"))) and $start[1] != $id) {
+
+  file_put_contents($start[1].".txt", $id."\n",FILE_APPEND);
+
+  bot('sendMessage',[
+
+    'chat_id'=>$start[1],
+
+    'text'=>"- شخص ما دخل الى رابط الدعوة الخاص بك ↓ ♥️👇"
+
+    ]);
+
+  $co = count(explode("\n", file_get_contents($start[1].".txt")));
+
+  bot('sendMessage',[
+
+    'chat_id'=>$start[1],
+
+    'text'=>"قام @$user بالدخول الى رابطك \n نقاطك الان = $co
+
+"
+
+    ]);
+
+}
+
+if($start[0] == "/start" and in_array($chat_id, $users) and !strpos($inch , '"status":"left"') !== false){
+
+bot("sendmessage",[
+
+'chat_id'=>$chat_id,
+
+'text'=>"
+
+- انت لا يمكنك دخول برابط دعوة ❌ •
+
+- سبب انك مشترك في البوت من قبل 💯 •
+
+",
+
+]);
+
+}
+
+if($link == "/start" and $from_id == $start[1]){
+
+bot('sendmessage',[
+
+'chat_id'=>$chat_id,
+
+'text'=>"- لا يمكن دخول ع رابط الخاص بك 🚫 •",
+
+]);
+
+}
+
+if($text == "⚙️ معلومات حسابک"){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>"✂ : $name
+
+ايديك 🎁 : $from_id
+
+ نقاطك : 
+
+ $co نقطة 
+
+
+
+للحصول عله نقاط اضغط عله رابط تجمیع نقاط وقم بجمع نقاط 📷
+
+.
+
+رجوع : /start
+
+",
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+      'keyboard'=>[
+
+[['text'=>"←"]],
+
+]])
+
+]);
+
+}
+
+if($text == "←"){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>'😍
+
+فی بوت رشق لایـlikeـک
+
+مافائده هذا البوت؟!
+
+عندک مسابقه ع اکثر تصویت(لایـlikeـک) وترید تفوز🥺؟
+
+عندک قنات مسوی بیها تصویت و محد یتفاعل و یصوت😞؟
+
+
+
+هذا البوت یرشقلک لایـlikeـک بل مجان تماما وراح یخلیک تفوز بمسابقتک وراح یصعد تفاعل قناتک کل هل شی بل مجان🥰
+
+≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈
+
+Welcome to my friend In the east,😍
+
+
+
+ What is this bot?⁉️
+
+ You have a more voting contest (not like you) and you want to win?🥺
+
+ Do you have a voting channel that is voting and interacting and voting?😞
+
+ This bot will not disturb you. I love you so much, and you will win your competition.🥰
+
+
+
+Try his free is🙃
+
+
+
+🔩 Creator : @murtjaa_1
+
+
+
+∞∞∞∞∞∞∞∞∞∞∞', 
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+'keyboard'=>[ 
+
+[ 
+
+['text'=>"💟 رشق like"]
+
+], 
+
+[['text'=>"⚙️ معلومات حسابک"],['text'=>"📊 احصائیات البوت"]],
+
+[['text'=>"🛍 متجر"],['text'=>"👽رابط تجمیع نقاط💎"]],[['text'=>"⚠️مراسله الدعم"]],
+
+] 
+
+]) 
+
+]); 
+
+}
+
+if($text == "🛍 متجر"){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>"💡لسته سعر نقاط بوت like Free
+
+
+
+📣 کل 55 نقطه ب 3$
+
+∞
+
+🎗خلطات معه تخفیض :
+
+
+
+💎 250 نقطه ب 5$
+
+💎 1000نقطه ب 10$
+
+
+
+°°°°°°°°°°°°°°°
+
+🌹لشراء نقاط راسل المطور🔚
+
+
+
+👨‍💻: @vvvvpv
+
+🤖: @mu07bot
+
+",
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+      'keyboard'=>[
+
+[['text'=>"←"]],
+
+]])
+
+]);
+
+}
+
+if($text == "📊 احصائیات البوت"){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>"- عدد المستخدمين : $m1 👉
+
+
+
+- عدد المطورين : 5 👉
+
+
+
+- سرعة تسليم الطلبات : 21.75 👉
+
+
+
+- عدد الطلبات : 0 👉
+
+",
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+      'keyboard'=>[
+
+[['text'=>"←"]],
+
+]])
+
+]);
+
+}
+
+if($text == "💟 رشق like"){ 
+
+bot('sendMessage',[ 
+
+'chat_id'=>$chat_id, 
+
+'text'=>' - نقاطك غير كـافيـة ❌،
+
+',
+
+'reply_markup'=>json_encode([ 
+
+'resize_keyboard'=>true,
+
+      'keyboard'=>[
+
+[['text'=>"←"]],
+
+]])
+
+]);
+
+}
+
+$inlinequery = $update->inline_query->query;
+
+$inlineID = $update->inline_query->from->id;
+
+if($inlinequery == "#$inlineID" ){
+
+    bot('answerInlineQuery',[
+
+    'inline_query_id'=>$update->inline_query->id,    
+
+    'cache_time'=>'300',
+
+    'results' => json_encode([[
+
+    'type'=>'article',
+
+    'id'=>base64_encode(rand(5,555)),
+
+    'title'=>' • اضغط هنا لمشاركة الرابط ، 🌐',
+
+    'thumb_url'=>"https://d.top4top.net/p_12168e2020.jpg",
+
+    'description'=>"سيتم آرسال الرابط تلقائي 
+
+ويتم تجميع النقاط تلقائي ايضا ...",
+
+    'input_message_content'=>[
+
+    'disable_web_page_preview'=>true,
+
+    'message_text'=>"هل تريد زيادة لايكات مسابقتك بل مجان ⚠.
+
+ هل تريد الفوز بجميع المسابقات 😳?
+
+هل ترید تصعد like تفاعل قناتک؟!
+
+ كل ماعليك هوا جمع نقاط و رشق لايكات مسابقتك او منشوراتک بكل سهوله ومجانا 📌 "],
+
+    'reply_markup'=>['inline_keyboard'=>[
+
+    [['text'=>"- اضغط للدخول ، 🛠",'url'=>"https://t.me/$bots?start=$inlineID"]]
+
+    ]]
+
+    ]])
+
+    ]);
+
+}
