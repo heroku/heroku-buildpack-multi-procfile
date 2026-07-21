@@ -24,6 +24,21 @@ fi
 
 echo "Copied ${PROCFILE} as Procfile successfully" | indent
 
+PROCFILE_APPEND=$(cat "${ENV_DIR}/PROCFILE_APPEND")
+
+for procfile_addition in ${PROCFILE_APPEND//,/ }
+do
+    if [[ ! -f "${BUILD_DIR}/${procfile_addition}" ]]; then
+        echo "FAILED to locate file: ${procfile_addition}" | indent
+        exit 1
+    fi
+
+    printf "\n# Contents of ${procfile_addition} appended below:\n" >> "${BUILD_DIR}/Procfile"
+    cat "${BUILD_DIR}/${procfile_addition}" >> "${BUILD_DIR}/Procfile"
+
+    echo "Appended contents of ${procfile_addition} to Procfile" | indent
+done
+
 APP_DIR=$(dirname "${BUILD_DIR}/${PROCFILE}")
 
 if [[ -f "${APP_DIR}/app.json" ]]; then
