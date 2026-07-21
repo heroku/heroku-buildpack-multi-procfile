@@ -30,3 +30,8 @@ if [[ -f "${APP_DIR}/app.json" ]]; then
     cp "${APP_DIR}/app.json" "${BUILD_DIR}/app.json"
     echo "Copied ${APP_DIR}/app.json as app.json successfully" | indent
 fi
+
+if [[ -f "${APP_DIR}/heroku.yml" ]]; then
+    cp "${APP_DIR}/heroku.yml" "${BUILD_DIR}/heroku.yml"
+    echo "Copied ${APP_DIR}/heroku.yml as heroku.yml successfully" | indent
+fi
